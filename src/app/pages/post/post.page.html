@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="grey" style="font-size: 80%; color: #ffffff;">
+    <ion-title [innerHTML]=" 'post.createNewPost' |  translate "></ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="#"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style="box-shadow: none;">
+    <ion-textarea auto-grow white-space: pre-wrap placeholder="Write something" name="postDescription" [(ngModel)]="postDescription">
+    </ion-textarea>
+    <img *ngIf="image" [src]="image" />
+    <ion-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center;"><ion-button fill="clear" color="primary" (click)="selectImage()" [innerHTML]=" 'post.uploadPhoto' |  translate ">&nbsp;<ion-icon name="images-outline"></ion-icon></ion-button><br/>
+            <ion-text style="font-size: 70%;">
+              Max 1 MB is allowed
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center;"><ion-button color="primary" fill="outline" (click)="post()" [innerHTML]=" 'post.post' |  translate " [disabled]="disableButton"></ion-button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-header>
+  </ion-card>
+</ion-content>

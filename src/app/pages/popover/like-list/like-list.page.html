@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><b [innerHTML]=" 'HOME.whoLikes' |  translate "></b></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let like of likes">
+      <ion-avatar slot="start">
+        <img [src] = "like.user.imageUrl" onerror="this.src='../../../../assets/images/default.png'"/>
+      </ion-avatar>
+      <ion-label text-wrap class="ion-text-wrap">
+        {{like.user.firstName}} {{like.user.lastName}}<br/>
+        <ion-text style="font-size: 60%;">
+          <!-- {{like.showDate}} -->
+          {{ like.created | date:'short'}}
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

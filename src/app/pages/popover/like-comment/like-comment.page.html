@@ -1,13 +1,104 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>like-comment</ion-title>
+    <ion-buttons slot="start">
+      &nbsp;&nbsp;<ion-icon *ngIf="post.isLike == 'Y'" (click)="deleteLike()" style="font-size: 130%;" name="thumbs-up">
+      </ion-icon>
+      <ion-icon *ngIf="post.isLike !== 'Y'" (click)="like()" style="font-size: 130%;" name="thumbs-up-outline"
+        [disabled]="disableButton"></ion-icon>&nbsp;<ion-text *ngIf="post.like > 0" style="color: blue;"
+        (click)="likes()">{{post.like}} <ion-text [innerHTML]=" 'HOME.likes' |  translate "></ion-text>
+      </ion-text>
+      <ion-text *ngIf="post.like == 0">{{post.like}} <ion-text [innerHTML]=" 'HOME.likes' |  translate "></ion-text>
+      </ion-text>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon style="font-size: 25px;" name="close" (click)="closeModal()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">like-comment</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="center-aligned">
+        <ion-icon style="font-size: 150%;" name="caret-down-sharp"></ion-icon><br>
+        <ion-span style="font-size: 80%;">Pull down for new msg</ion-span>
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row *ngFor="let comment of post.comments">
+      <ion-col size="9" *ngIf="profile.id !== comment.user.id" class="message other-message">
+        <b>{{ comment.user.firstName }} {{ comment.user.lastName }}</b><br>
+        <span>{{ comment.comment }}</span>
+        <div class="time" text-right><br>
+          <!-- {{ comment.showDate }} -->
+          {{ comment.created | date:'short'}}
+        </div>
+      </ion-col>
+      <ion-col offset="3" size="8" *ngIf="profile.id === comment.user.id" class="message my-message">
+        <b>{{ comment.user.firstName }} {{ comment.user.lastName }}</b><br>
+        <span>{{ comment.comment }}</span>
+        <div class="time" text-right><br>
+          <!-- {{ comment.showDate }} -->
+          {{ comment.created | date:'short'}}
+        </div>
+      </ion-col>
+      <ion-col size="1" *ngIf="profile.id == comment.user.id" class="center-aligned">
+        <ion-button fill="clear" (click)="deleteComment(comment)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-refresher #refresherRef slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Loading...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <ion-grid>
+    <ion-row *ngFor="let comment of post.comments">
+      <ion-col size="11">
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <img [src]="post.user.imageUrl" onerror="this.src='../../../../assets/images/default.png'" width="50%"
+              height="50%" />
+          </ion-avatar>
+          <ion-label *ngIf="profile.id !== comment.user.id"
+            style="padding: 5px ;font-size: 90%; border-radius: 5px; background: rgb(221, 221, 221);">
+            <b>{{comment.user.firstName}} {{comment.user.lastName}}</b><br />
+            <ion-text style="font-size: 60%;">({{comment.showDate}})</ion-text><br />
+            <ion-text white-space: pre-wrap style="font-size: 80%;">{{comment.comment}}</ion-text>
+          </ion-label>
+          <ion-label text-wrap *ngIf="profile.id == comment.user.id"
+            style="padding: 5px ;font-size: 90%; border-radius: 5px; background: rgb(232 246 217);">
+            <b>{{comment.user.firstName}} {{comment.user.lastName}}</b><br />
+            <ion-text style="font-size: 60%;">({{comment.showDate}})</ion-text><br />
+            <ion-text white-space: pre-wrap style="font-size: 80%;">{{comment.comment}}</ion-text>
+          </ion-label>
+        </ion-item>
+
+      </ion-col>
+      <ion-col size="1" *ngIf="profile.id == comment.user.id" class="center-aligned">
+        <ion-button fill="clear" (click)="deleteComment(comment)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-row align-items-center no-padding>
+      <ion-col size="10">
+        <textarea autosize maxRows="5" name="myComment" [(ngModel)]="myComment"
+          class="message-input center-aligned"></textarea>
+      </ion-col>
+      <ion-col size="2" class="center-aligned">
+        <ion-button expand="block" fill="clear" color="primary" [disabled]="disableButton" class="msg-btn"
+          (click)="comment()">
+          <ion-icon name="send-sharp" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
