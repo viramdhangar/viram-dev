@@ -1,0 +1,108 @@
+{
+    "HOME": {
+        "createYourPost": "Post",
+        "home": "Home",
+        "membership": "Membership",
+        "more": "More",
+        "like": "Like",
+        "likes": "Like's",
+        "comment": "Comment",
+        "whoLikes": "Who Likes",
+        "readMore": "Read more",
+        "readLess": "Read less"
+    },
+    "post": {
+        "createNewPost": "Create New Post",
+        "uploadPhoto": "Upload Photo",
+        "post": "Post",
+        "birthdayWishes": "Write Birthday Wishes !"
+    },
+    "membership": {
+        "membership": "Membership",
+        "membershipForm": "Membersip Form",
+        "memberDetail": "Member Details",
+        "memberName": "Member Name",
+        "fatherName": "Father Name",
+        "gotra": "Gotra",
+        "from": "Address",
+        "village": "Village/Area",
+        "tehsil": "Tehsil",
+        "district": "District",
+        "state": "State",
+        "phone": "Phone",
+        "occupation": "Occupation",
+        "membershipFees": "Membership Fees",
+        "membershipTaken": "Membership Taken",
+        "membershipFeesRemark": "Remarks",
+        "next": "Next"
+    },
+    "more":{
+        "profile": "Profile",
+        "share": "Share with others",
+        "logout": "Logout",
+        "login": "Login",
+        "policy": "Policy",
+        "changePassword": "Change Password",
+        "appointedMembers": "Appointed Members"
+    },
+    "profile":{
+        "profile": "My Profile",
+        "updateTitle": "Update your details",
+        "enterTitle": "Enter your details",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "phone": "Phone",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "changePhoto": "Change Photo",
+        "uploadPhoto": "Upload Photo",
+        "alreadyMember": "Already Member?",
+        "submit": "Save",
+        "register": "Register",
+        "dob": "Date of Birth"
+    },
+    "login": {
+        "title": "Gayari Connect",
+        "or": "or",
+        "username": "Username",
+        "password": "Password",
+        "forgotPassword": "Forgot Password?",
+        "dontHaveAccount": "Don't have a account?",
+        "continue": "Continue Without Login"
+    },
+    "forgot": {
+        "forgot": "Forgot Password",
+        "forgotTitle": "Provide your registered email",
+        "verifyTitle": "Verify OTP recieved on email",
+        "changeTitle": "New password",
+        "enterOTP": "Enter OTP",
+        "verifyOTP": "Verify OTP",
+        "enterEmail": "Enter email",
+        "typeNewPassword": "Type new password",
+        "reTypeNewPassword": "Retype new password",
+        "sendOTP": "Send OTP",
+        "resetNow": "Reset Now"
+    },
+    "change": {
+        "changePassword": "Change Password",
+        "currentPassword": "Current password",
+        "typeNewPassword": "Type new password",
+        "reTypeNewPassword": "Retype new password",
+        "changeNow": "Change Now"
+    },
+    "appointed": {
+        "appointedMember": "Appointed Members",
+        "appointMember": "Appoint Member",
+        "appointTo": "Apponited to",
+        "member": "Member",
+        "appointedOn": "Appointed On",
+        "sortOrder": "Sort Order",
+        "save": "Save"
+    },
+    "wed": {
+        "comingSoon": "Coming soon .. !",
+        "wedding": "Wedding",
+        "weddingProfile": "Wedding Profiles"
+    }
+}

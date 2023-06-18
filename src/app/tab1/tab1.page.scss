@@ -1,0 +1,202 @@
+// ion-content{
+//   --background: #fff url('../../assets/images/bg.jpg') no-repeat center center / cover;
+// }
+
+.text-style{
+    white-space: pre-wrap
+  }
+  
+  // .swiper-container {
+  //     width: 100%;
+  //     height: 100%;
+  // }
+  // .swiper-slide {
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: center;
+  //     justify-content: center;
+  // }
+  
+  
+  // @import "~swiper/css";
+  // @import "~swiper/css/effect-cards";
+  // body {
+  //   background: #fff;
+  //   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  //   font-size: 14px;
+  //   color: #000;
+  //   margin: 0;
+  //   padding: 0;
+  // }
+  
+  // html,
+  // body {
+  //   position: relative;
+  //   height: 100%;
+  // }
+  
+  // body {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+  
+  // .swiper {
+  //   width: 240px;
+  //   height: 320px;
+  // }
+  
+  // .swiper-slide {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   border-radius: 18px;
+  //   font-size: 22px;
+  //   font-weight: bold;
+  //   color: #fff;
+  // }
+  
+  // .swiper-slide:nth-child(1n) {
+  //   background-color: rgb(206, 17, 17);
+  // }
+  
+  // .swiper-slide:nth-child(2n) {
+  //   background-color: rgb(0, 140, 255);
+  // }
+  
+  // .swiper-slide:nth-child(3n) {
+  //   background-color: rgb(10, 184, 111);
+  // }
+  
+  // .swiper-slide:nth-child(4n) {
+  //   background-color: rgb(211, 122, 7);
+  // }
+  
+  // .swiper-slide:nth-child(5n) {
+  //   background-color: rgb(118, 163, 12);
+  // }
+  
+  // .swiper-slide:nth-child(6n) {
+  //   background-color: rgb(180, 10, 47);
+  // }
+  
+  // .swiper-slide:nth-child(7n) {
+  //   background-color: rgb(35, 99, 19);
+  // }
+  
+  // .swiper-slide:nth-child(8n) {
+  //   background-color: rgb(0, 68, 255);
+  // }
+  
+  // .swiper-slide:nth-child(9n) {
+  //   background-color: rgb(218, 12, 218);
+  // }
+  
+  // .swiper-slide:nth-child(10n) {
+  //   background-color: rgb(54, 94, 77);
+  // }
+  
+  
+  //@import "~swiper/css";
+  //@import "~swiper/css/effect-coverflow";
+  //@import "~swiper/css/pagination";
+  .swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+  }
+  
+  
+  @mixin truncate($rows, $line-height, $background: '') {
+    position: relative;
+    overflow: hidden;
+    max-height: $line-height * $rows;
+    line-height: $line-height;
+  
+    &:after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100px;
+      height: $line-height;
+  
+      @if $background != '' {
+        background: linear-gradient(to right, rgba($background, 0) 0%, rgba($background, 1) 100%);
+      }
+    }
+  
+    // If supports line-clamp then add an ellipsis overflow and hide the gradient
+    // This will work in Chrome and Opera, otherwise a gradient will gradually hide the text.
+  
+    @supports (-webkit-line-clamp: $rows) {
+      display: -webkit-box;
+      -webkit-line-clamp: $rows;
+      -webkit-box-orient: vertical;
+  
+      &:after {
+        display: none;
+      }
+    }
+  }
+  
+  .show-hide-text {
+    display: flex;
+    flex-wrap: wrap;
+  
+    a {
+      order: 2;
+    }
+  
+    p {
+      @include truncate(3, 20px, #fff); // rows, line-height, gradient fallback
+    }
+  }
+  
+  .show-less {
+    display: none;
+  
+    &:target {
+      display: block;
+  
+      ~ p {
+        display: block;
+        max-height: 100%;
+      }
+  
+      + a {
+        display: none;
+      }
+    }
+  }
+  
+  
+  
+  // Presentation styles
+  
+  .wrapper {
+    max-width: 300px;
+    margin: 50px auto;
+    
+    p {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+  
+  #map {
+    height: 50vh;
+  }
+  

@@ -1,0 +1,18 @@
+<ion-content class="center-aligned">
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col style="text-align: center; color: #fff;">
+        Gayari Connect
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  <div *ngIf="showWelcome == false" class="container ion-text-center">
+    <img src="assets/icon.jpg"> <br> <br>
+    <ion-text class="title-text"><b style="color: #FFFF;">Jai ho devnarayan!</b></ion-text>
+  </div>
+
+  <div *ngIf="showWelcome == true" class="tracking-in-contract-bck ion-text-center">
+    <!-- Welcome to 'Gayari Connect' ! -->
+     <ion-text style="font-size: 150%;" class="title-text">Welcome to <br> <br><b>GAYARI CONNECT !</b></ion-text> 
+  </div> 
+</ion-content>

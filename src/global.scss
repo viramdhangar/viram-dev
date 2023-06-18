@@ -1,0 +1,105 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+//@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+//@import "~@ionic/angular/css/normalize.css";
+//@import "~@ionic/angular/css/structure.css";
+//@import "~@ionic/angular/css/typography.css";
+//@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+//@import "~@ionic/angular/css/padding.css";
+//@import "~@ionic/angular/css/float-elements.css";
+//@import "~@ionic/angular/css/text-alignment.css";
+//@import "~@ionic/angular/css/text-transformation.css";
+//@import "~@ionic/angular/css/flex-utils.css";
+
+// global.scss
+//@import '~swiper/scss';
+//@import '~swiper/scss/autoplay';
+//@import '~swiper/scss/keyboard';
+//@import '~swiper/scss/pagination';
+//@import '~swiper/scss/navigation';
+//@import '~swiper/scss/scrollbar';
+//@import '~swiper/scss/zoom';
+//@import '~@ionic/angular/css/ionic-swiper';
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import '@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+.center-aligned{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.col-aligned{
+    display: flex; 
+    flex-direction: column; 
+    //align-items: center; 
+    justify-content: center;
+    text-align: left;
+}
+
+.ion-color-grey {
+    //--ion-color-base: #5e5e5edb;
+    background-image: linear-gradient(rgb(97, 97, 253), grey);
+}
+
+.ion-color-warning {
+    --ion-color-base: #7070c0 !important;
+    --ion-color-base-rgb: var(--ion-color-warning-rgb, 255, 196, 9) !important;
+    --ion-color-contrast: var(--ion-color-warning-contrast, #000) !important;
+    --ion-color-contrast-rgb: var(--ion-color-warning-contrast-rgb, 0, 0, 0) !important;
+    --ion-color-shade: var(--ion-color-warning-shade, #e0ac08) !important;
+    --ion-color-tint: var(--ion-color-warning-tint, #ffca22) !important;
+}
+
+.ion-color-white {
+    --ion-color-base: #ffffff;
+}
+
+
+ion-fab{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .my-custom-class {
+    --backdrop-opacity: 0.2;
+    --color: #b52024 !important;
+    --background: black;//linear-gradient(90deg, rgba(165, 255, 192, 1) 1%, rgba(0, 212, 255, 1) 100%);
+    .alert-button {
+        color: yellow;
+    }
+    .alert-message{
+        color: #ffffff;
+    } 
+}

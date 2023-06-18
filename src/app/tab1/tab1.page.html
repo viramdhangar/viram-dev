@@ -1,0 +1,359 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="grey" style="color: #ffffff;">
+    <ion-title>
+      <ion-text (click)="createPost()" style="font-size: 95%;"
+        [innerHTML]=" 'HOME.createYourPost' |  translate "></ion-text>
+    </ion-title>
+    <ion-buttons slot="start" (click)="createPost()" *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_SUPER'">
+      &nbsp;<ion-icon color="white" style="font-size: 150%;" name="add-circle-outline"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="selectedLan == 'en'" (click)="changeLanguadge('hi')">
+        <ion-text style="size: 50%;">हिंदी</ion-text>
+      </ion-button>
+      <ion-button *ngIf="selectedLan == 'hi'" (click)="changeLanguadge('en')">
+        <ion-text style="size: 25%;">English</ion-text>
+      </ion-button>
+      <!-- <ion-menu-button autoHide='false'></ion-menu-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-text (click)="signIn()">signIn</ion-text> -->
+  <!-- <div id="map" #map></div> -->
+  <div *ngIf="loaderDistroyer == true">
+    <!--<swiper [config]="config" *ngIf="birthdays.length>0">
+      <ng-template swiperSlide *ngFor="let birth of birthdays">
+        <ion-card class="ion-no-padding">
+          <img  src="../../assets/images/birthday.gif" />
+          <ion-grid>
+            <ion-row>
+              <ion-col size="10">
+                  <ion-avatar slot="start">
+                    <img [src] = "birth.decodedBase64" onerror="this.src='../../../../assets/images/default.png'"/>
+                  </ion-avatar>
+                    <ion-row>
+                      <ion-col style="text-align: left;">
+                        <ion-text>
+                          <i style="color: blueviolet;">Wishing happy birthday to</i><br>
+                          <b style="color: black;">{{birth.firstName}} {{birth.lastName}}</b><br><span *ngIf="birth?.village" style="text-align: left; font-size: 60%;">{{birth.village}}, {{birth.tehsil}}<br> ({{birth.district}}, {{birth.state}})</span>
+                        </ion-text>
+                      </ion-col>
+                    </ion-row>
+              </ion-col>
+              <ion-col size="2" class="center-aligned">
+                <ion-icon *ngIf="birth.isComment" color="success" style="font-size: 150%;" name="checkmark-done-sharp"></ion-icon>
+                <span *ngIf="birth.comment === 0" style="font-size: 70%; font-weight: bold; color: orange;">Wish First?</span>
+                <span *ngIf="birth.comment !== 0" style="font-size: 70%;">({{birth.comment}}) Wishes</span>
+                <ion-button ion-padding fill="outline" color="primary" size="small" (click)="birthdayWish(birth)">Wish?</ion-button>
+              </ion-col>
+              </ion-row>
+          </ion-grid>
+        </ion-card>  
+      </ng-template>
+    </swiper>-->
+    <ion-card class="ion-no-padding" *ngFor="let post of allPost; let pos = index">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="11">
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <img [src]="post.user.decodedBase64" onerror="this.src='../../../../assets/images/default.png'" />
+              </ion-avatar>
+              <ion-label>
+                {{post.user.firstName}} {{post.user.lastName}}<br />
+                <ion-text style="font-size: 60%;">
+
+                  {{ post.created | date:'short'}}
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="profile.id === post.user.id || role === 'ROLE_SUPER' || role === 'ROLE_ADMIN'" size="1"
+            class="center-aligned" (click)="presentActionSheet(post, pos, header)">
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="text-style" *ngIf="post.less" style="text-align: justify;">
+            {{post.lessContent}} .. <a (click)="readMore(post)"><ion-text
+                [innerHTML]=" 'HOME.readMore' |  translate "></ion-text></a>
+          </ion-col>
+          <ion-col class="text-style" *ngIf="post.more" style="text-align: justify;">
+            {{post.postDescription}} <ion-text *ngIf="post.postDescription.length > 500"><a
+                (click)="readLess(post)"><ion-text
+                  [innerHTML]=" 'HOME.readLess' |  translate "></ion-text></a></ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <img [src]="post.decodedBase64" />
+      <ion-item-divider class="ion-no-padding">
+      </ion-item-divider>
+      <ion-row>
+        <ion-col style="text-align: center;">
+          <ion-icon *ngIf="post.isLike == 'Y'" color="primary" style="font-size: 130%;" name="thumbs-up"
+            (click)="deleteLike(post)" [disabled]="disableButton"></ion-icon><ion-icon *ngIf="post.isLike !== 'Y'"
+            style="font-size: 130%;" name="thumbs-up-outline" (click)="like(post)"
+            [disabled]="disableButton"></ion-icon><br /><ion-text [innerHTML]=" 'HOME.like' |  translate "></ion-text>
+          <b *ngIf="post.like>0">({{post.like}})</b>
+        </ion-col>
+        <ion-col style="text-align: center;">
+          <ion-icon *ngIf="post.isComment !== 'Y'" style="font-size: 130%;" name="chatbox-outline"
+            (click)="comment(post)"></ion-icon><ion-icon *ngIf="post.isComment == 'Y'" color="primary"
+            style="font-size: 130%;" name="chatbox" (click)="comment(post)"></ion-icon><br /><ion-text
+            [innerHTML]=" 'HOME.comment' |  translate "></ion-text> <b *ngIf="post.comment>0">({{post.comment}})</b>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+  <div *ngIf="loaderDistroyer == false">
+    <ion-list>
+      <ion-card class="ion-no-padding" animated>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="color: rgb(202, 200, 200);">
+                  Name
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                  <ion-text style="font-size: 60%;color: rgb(202, 200, 200);">date</ion-text>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="text-style" style="text-align: justify;color: rgb(202, 200, 200);">
+              Description
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-item-divider class="ion-no-padding">
+        </ion-item-divider>
+        <ion-row>
+          <ion-col style="text-align: center;">
+            <ion-icon style="font-size: 130%;" name="thumbs-up-outline"></ion-icon>
+          </ion-col>
+          <ion-col style="text-align: center;">
+            <ion-icon style="font-size: 130%;" name="chatbox-outline"></ion-icon>
+          </ion-col>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-row>
+      </ion-card>
+      <ion-card class="ion-no-padding" animated>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="color: rgb(202, 200, 200);">
+                  Name
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                  <ion-text style="font-size: 60%;color: rgb(202, 200, 200);">date</ion-text>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="text-style" style="text-align: justify;color: rgb(202, 200, 200);">
+              Description
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-item-divider class="ion-no-padding">
+        </ion-item-divider>
+        <ion-row>
+          <ion-col style="text-align: center;">
+            <ion-icon style="font-size: 130%;" name="thumbs-up-outline"></ion-icon>
+          </ion-col>
+          <ion-col style="text-align: center;">
+            <ion-icon style="font-size: 130%;" name="chatbox-outline"></ion-icon>
+          </ion-col>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-row>
+      </ion-card>
+      <ion-card class="ion-no-padding" animated>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="color: rgb(202, 200, 200);">
+                  Name
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                  <ion-text style="font-size: 60%;color: rgb(202, 200, 200);">date</ion-text>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="text-style" style="text-align: justify;color: rgb(202, 200, 200);">
+              Description
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-item-divider class="ion-no-padding">
+        </ion-item-divider>
+        <ion-row>
+          <ion-col style="text-align: center;">
+            <ion-icon style="font-size: 130%;" name="thumbs-up-outline"></ion-icon>
+          </ion-col>
+          <ion-col style="text-align: center;">
+            <ion-icon style="font-size: 130%;" name="chatbox-outline"></ion-icon>
+          </ion-col>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<!--<ion-content>
+  <swiper [config]="config">
+    <ng-template swiperSlide>
+      <ion-card class="ion-no-padding">
+        <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Name: Viram Dhangar
+            </ion-col>
+            <ion-col>
+              Age: 35 Years
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>  
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-card>
+        <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Name: Vikas Dhangar
+            </ion-col>
+            <ion-col>
+              Age: 30 Years
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>  
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-card>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Name: Rahul Dhangar
+            </ion-col>
+            <ion-col>
+              Age: 25 Years
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>  
+    </ng-template>
+     
+    <ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-2.jpg" /></ng-template
+    ><ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-3.jpg" /></ng-template
+    ><ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-4.jpg" /></ng-template
+    ><ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-5.jpg" /></ng-template
+    ><ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-6.jpg" /></ng-template
+    ><ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-7.jpg" /></ng-template
+    ><ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-8.jpg" /></ng-template
+    ><ng-template swiperSlide
+      ><img src="https://swiperjs.com/demos/images/nature-9.jpg"
+    /></ng-template>
+  </swiper>
+  <ion-grid *ngIf="loginState == false">
+    <ion-row>
+      <ion-col style="text-align: center;">
+        <ion-button fill="clear" color="primary" routerLink="/register">
+          Create Profile
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loginState == true">
+    <ion-row>
+      <ion-col style="text-align: center;">
+        <ion-button fill="clear" color="primary" routerLink="/register">
+          Complete your Profile
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>-->
+
+<!-- <ion-content>
+  <ion-button expand="full" (click)="callPayment()">Call to payment</ion-button>
+  <ion-button (click)="share()">refer</ion-button>
+  <ion-button expand="full" (click)="signIn()" *ngIf="!user">
+    <ion-icon name="logo-google" slot="start"></ion-icon> SignIn with Google</ion-button>
+  <ion-button expand="full" (click)="signOut()" *ngIf="user">SignOut</ion-button>
+  <ion-button expand="full" (click)="refresh()" *ngIf="!user">Try Refresh</ion-button>
+  
+    
+    <h3 *ngIf="images.length == 0" class="ion-padding ion-text-center">Please Select Image!</h3>
+    <ion-list>
+      <ion-item *ngFor="let file of images">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="file.data"></ion-img>
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap">
+          {{file.name}}
+        </ion-label>
+        <ion-button slot="end" fill="clear" (click)="startUpload(file)">
+          <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  <ion-item *ngIf="user">
+    <ion-avatar slot="start">
+      <img [src] = "user.imageUrl" />
+    </ion-avatar>
+    <ion-label>
+      {{user.givenName}} {{user.familyName}}
+      <p>{{user.email}}</p>
+    </ion-label>
+  </ion-item>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Select Image
+    </ion-button>
+  </ion-toolbar>
+</ion-footer> -->
